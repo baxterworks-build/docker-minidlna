@@ -14,8 +14,8 @@ steps:
 - name: build
   image: alpine:latest
   commands: 
-    - mkdir -p /output
-    - sh build.sh &> /output/log.txt || curl -F 'sprunge=</output/log.txt' sprunge.us
+    - mkdir -p /log/
+    - sh build.sh &> /log/log.txt || curl -F 'sprunge=</log/log.txt' sprunge.us
 
 - name: publish  
   image: plugins/github-release
