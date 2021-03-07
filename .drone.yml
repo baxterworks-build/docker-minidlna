@@ -4,21 +4,17 @@ name: default
 
 steps:
 - name: build
-  image: docker
-  volumes:
-  - name: dockersock
-    path: /var/run/docker.sock
-  commands:
-  - docker build -t voltagex/minidlna-static:latest
+  image: alpine:latest
+  commands: sh build.sh
 
-- name: test
-  image: foo:latest
-  pull: if-not-exists
-  commands:
-  - echo bar
-
-volumes:
-- name: dockersock
-  host:
-    path: /var/run/docker.sock
-
+- name: publish  
+  image: plugins/github-release
+  when:
+    ref:
+      include: 
+        - refs/tags/release-*
+      exclude:
+        - refs/tags/**
+  settings:
+    api_key:
+      from_secret: github_token
