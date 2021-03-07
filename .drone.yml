@@ -5,7 +5,8 @@ name: default
 steps:
 - name: build
   image: alpine:latest
-  command: sh build.sh
+  commands: 
+    - sh build.sh
 
 - name: publish  
   image: plugins/github-release
