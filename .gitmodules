@@ -1,0 +1,18 @@
+[submodule "src/ffmpeg"]
+	path = src/ffmpeg
+	url = https://github.com/FFmpeg/ffmpeg
+[submodule "src/libexif"]
+	path = src/libexif
+	url = https://github.com/libexif/libexif
+[submodule "src/ogg"]
+	path = src/ogg
+	url = https://github.com/xiph/ogg
+[submodule "src/flac"]
+	path = src/flac
+	url = https://github.com/xiph/flac
+[submodule "src/vorbis"]
+	path = src/vorbis
+	url = https://github.com/xiph/vorbis
+[submodule "src/minidlna-git"]
+	path = src/minidlna-git
+	url = https://git.code.sf.net/p/minidlna/git

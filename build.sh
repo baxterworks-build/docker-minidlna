@@ -6,49 +6,36 @@
 #https://www.fireflymediaserver.net/forums/topic/svn-1303-configure-error-id3_file_open/
 #https://github.com/miniupnp/miniupnp/issues/25
 
-export SRC=/src
-mkdir -p $SRC
+export SRC=$PWD/src
 
-apk update; apk add alpine-sdk autoconf automake gettext-dev gettext-static libtool pkgconfig git zlib-static sqlite-static libjpeg-turbo-static libjpeg-turbo-dev yasm sqlite-dev libid3tag-dev
+apk update; apk add alpine-sdk autoconf automake gettext-dev gettext-static libtool pkgconfig zlib-static sqlite-static libjpeg-turbo-static libjpeg-turbo-dev yasm sqlite-dev libid3tag-dev
 
-cd $SRC
-git clone --depth=1 https://github.com/FFmpeg/ffmpeg
 cd $SRC/ffmpeg
 ./configure --disable-programs --disable-doc --enable-gpl --disable-all --enable-static --enable-avcodec --enable-avformat
 make -j
 make install
-cd $SRC
 
-git clone --depth=1 https://github.com/libexif/libexif
 cd $SRC/libexif
 autoreconf -i
 ./configure --disable-docs --enable-static
 make -j
 make install
-cd $SRC
 
-git clone --depth=1 https://github.com/xiph/ogg
 cd $SRC/ogg
 ./autogen.sh && ./configure --enable-static --disable-shared --disable-dependency-tracking
 make -j
 make install
-cd $SRC
 
-git clone --depth=1 https://github.com/xiph/flac
 cd $SRC/flac
 ./autogen.sh && ./configure --enable-static --disable-shared --disable-dependency-tracking
 make -j
 make install
-cd $SRC
 
-git clone --depth=1 https://github.com/xiph/vorbis
 cd $SRC/vorbis
 ./autogen.sh && ./configure --enable-static --disable-shared --disable-dependency-tracking
 make -j
 make install
-cd $SRC
 
-git clone https://git.code.sf.net/p/minidlna/git minidlna-git
 cd $SRC/minidlna-git
 wget -O /usr/include/sys/queue.h https://raw.githubusercontent.com/libevent/libevent/master/compat/sys/queue.h
 autoreconf -i
@@ -56,7 +43,6 @@ autoreconf -i
 make -j
 #make dist #How do I generate the changelog that this command requires?
 make install
-cd $SRC
 
 cd /output
 tar -zvcf /minidlna-static.tar.gz .
