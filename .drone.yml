@@ -18,6 +18,8 @@ steps:
 
 - name: publish  
   image: plugins/github-release
+  commands:
+    - ls /output
   when:
     ref:
       include: 
@@ -26,6 +28,6 @@ steps:
     api_key:
       from_secret: github_token
     files:
-      - /output/*.tar.gz
+      - /output/*
     when:
       event: tag
