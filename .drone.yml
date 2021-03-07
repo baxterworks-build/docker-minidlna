@@ -9,17 +9,20 @@ steps:
 - name: clone recursive
   image: alpine/git
   commands:
-  - git clone --recursive --depth=1 ${DRONE_GIT_HTTP_URL} .
+    - git clone --recursive --depth=1 ${DRONE_GIT_HTTP_URL} .
+  when:
+    event: tag
 
 - name: build
   image: alpine:latest
   commands: 
-    - sh build.sh
+    - mkdir -p /output
+    - sh build.sh &> /output/log.txt
+  when:
+    event: tag
 
 - name: publish  
   image: plugins/github-release
-  commands:
-    - ls /output
   when:
     ref:
       include: 
