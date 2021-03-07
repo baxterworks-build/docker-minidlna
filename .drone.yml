@@ -15,8 +15,8 @@ steps:
   image: alpine:latest
   commands: 
     - mkdir -p /log/
-    - sh build.sh &> /log/log.txt || curl -F 'sprunge=</log/log.txt' sprunge.us
-
+    - sh build.sh &> /log/log.txt #|| curl -F 'sprunge=</log/log.txt' sprunge.us
+    - cp /log/log.txt output/log.txt
 - name: publish  
   image: plugins/github-release
   when:
@@ -27,6 +27,6 @@ steps:
     api_key:
       from_secret: github_token
     files:
-      - /output/*
+      - output/*
     when:
       event: tag

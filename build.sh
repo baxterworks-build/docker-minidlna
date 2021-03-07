@@ -6,8 +6,8 @@
 #https://www.fireflymediaserver.net/forums/topic/svn-1303-configure-error-id3_file_open/
 #https://github.com/miniupnp/miniupnp/issues/25
 
-export SRC=$PWD/src
-
+export SRC=$PWD/src/
+export OUTPUT=$PWD/output/
 apk update; apk add alpine-sdk autoconf automake gettext-dev gettext-static libtool pkgconfig zlib-static sqlite-static libjpeg-turbo-static libjpeg-turbo-dev yasm sqlite-dev libid3tag-dev
 
 cd $SRC/ffmpeg
@@ -39,10 +39,10 @@ make install
 cd $SRC/minidlna-git
 wget -O /usr/include/sys/queue.h https://raw.githubusercontent.com/libevent/libevent/master/compat/sys/queue.h
 autoreconf -i
-./configure --prefix=/output --enable-static
+./configure --prefix=$OUTPUT --enable-static
 make -j
 #make dist #How do I generate the changelog that this command requires?
 make install
 
-cd /output
-tar -zvcf /minidlna-static.tar.gz .
+cd $OUTPUT
+tar -zvcf $OUTPUT/minidlna-static.tar.gz .
