@@ -2,7 +2,15 @@
 kind: pipeline
 name: default
 
+clone:
+  disable: true
+
 steps:
+- name: clone recursive
+  image: alpine/git
+  commands:
+  - git clone --recursive --depth=1 ${DRONE_GIT_HTTP_URL} .
+
 - name: build
   image: alpine:latest
   commands: 
