@@ -27,3 +27,7 @@ steps:
   settings:
     api_key:
       from_secret: github_token
+    files:
+      - /output/*.tar.gz
+    when:
+      event: tag
