@@ -27,6 +27,7 @@ steps:
     api_key:
       from_secret: github_token
     files:
-      - output/*
+      - output/minidlna-static.tar.gz
+      - output/log.txt
     when:
       event: tag

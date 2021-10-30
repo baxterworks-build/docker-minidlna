@@ -14,4 +14,4 @@ It's also a *reasonable* example of what needs to be done to go from Git repo to
 * alpine doesn't ship static libraries for all packages, hence needing ffmpeg/libogg/vorbis/flac from source
 * There's a stack of links at the start of build.sh for each issue I hit while building this
 * musl libc doesn't ship sys/queue.h, so I borrowed it from libevent
-
+* `git submodule update --remote --merge` to update all submodules to the latest version
