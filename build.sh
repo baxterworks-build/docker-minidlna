@@ -37,7 +37,7 @@ make -j
 make install
 
 cd $SRC/minidlna-git
-wget -O /usr/include/sys/queue.h https://raw.githubusercontent.com/libevent/libevent/master/compat/sys/queue.h
+cp -v $SRC/queue.h /usr/include/sys/queue.h
 autoreconf -i
 ./configure --prefix=$OUTPUT --enable-static
 make -j
