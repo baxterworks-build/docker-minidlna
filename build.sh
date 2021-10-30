@@ -49,7 +49,7 @@ cd $SRC/minidlna-git
 cp -v $SRC/queue.h /usr/include/sys/queue.h
 { autoreconf -i && ./configure --prefix=$OUTPUT --enable-static; } | tee -a $LOGS/minidlna.configure.log
 #make dist #How do I generate the changelog that this command requires?
-{ make -j && make install } | tee -a $LOGS/minidlna.make.log
+{ make -j && make install; } | tee -a $LOGS/minidlna.make.log
 
 cd $OUTPUT
 tar -zvcf $OUTPUT/minidlna-static.tar.gz .

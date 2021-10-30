@@ -14,9 +14,7 @@ steps:
 - name: build
   image: alpine:latest
   commands: 
-    - mkdir -p /log/
-    - sh build.sh &> /log/log.txt || curl -F 'sprunge=</log/log.txt' sprunge.us
-    - cp /log/log.txt output/log.txt
+    - sh +x build.sh
 - name: publish  
   image: plugins/github-release
   when:
@@ -28,6 +26,5 @@ steps:
       from_secret: github_token
     files:
       - output/minidlna-static.tar.gz
-      - output/log.txt
     when:
       event: tag
