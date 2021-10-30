@@ -11,6 +11,7 @@ It's also a *reasonable* example of what needs to be done to go from Git repo to
 * Reproducible build?
 
 ## Useful info for other builds
+* alpine 3.14 is broken on drone.io until https://discourse.drone.io/t/cloud-alpine-3-14-does-not-work/9992 is resolved
 * alpine doesn't ship static libraries for all packages, hence needing ffmpeg/libogg/vorbis/flac from source
 * There's a stack of links at the start of build.sh for each issue I hit while building this
 * musl libc doesn't ship sys/queue.h, so I borrowed it from libevent

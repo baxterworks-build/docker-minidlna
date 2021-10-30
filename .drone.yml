@@ -12,7 +12,7 @@ steps:
     - git clone --recursive --depth=1 ${DRONE_GIT_HTTP_URL} .
 
 - name: build
-  image: alpine:latest
+  image: alpine:3.13
   commands: 
     - sh +x build.sh
 - name: publish  
