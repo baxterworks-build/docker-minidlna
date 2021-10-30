@@ -8,41 +8,48 @@
 
 export SRC=$PWD/src/
 export OUTPUT=$PWD/output/
-apk update; apk add alpine-sdk autoconf automake gettext-dev gettext-static libtool pkgconfig zlib-static sqlite-static libjpeg-turbo-static libjpeg-turbo-dev yasm sqlite-dev libid3tag-dev
+export LOGS=$OUTPUT
+
+mkdir -p $OUTPUT $LOGS
+
+
+{ apk update; apk add alpine-sdk autoconf automake gettext-dev gettext-static libtool pkgconfig zlib-static sqlite-static libjpeg-turbo-static libjpeg-turbo-dev yasm sqlite-dev libid3tag-dev; } >> $LOGS/alpine.log
+
+#Not running in Drone, so we'll need to do the recursive checkout ourselves
+if [ -z "${DRONE}" ]; then
+	echo Running locally
+	apk add git
+	mkdir $SRC
+	cd $SRC
+	git clone --recursive https://github.com/baxterworks-build/docker-minidlna .
+fi
+
 
 cd $SRC/ffmpeg
-./configure --disable-programs --disable-doc --enable-gpl --disable-all --enable-static --enable-avcodec --enable-avformat
-make -j
-make install
+./configure --disable-programs --disable-doc --enable-gpl --disable-all --enable-static --enable-avcodec --enable-avformat | tee -a $LOGS/ffmpeg.configure.log
+{ make -j && make install; } | tee -a $LOGS/ffmpeg.make.log
 
 cd $SRC/libexif
-autoreconf -i
-./configure --disable-docs --enable-static
-make -j
-make install
+{ autoreconf -i && ./configure --disable-docs --enable-static; } | tee -a $LOGS/libexif.configure.log
+{ make -j && make install; } | tee -a $LOGS/libexif.make.log
 
 cd $SRC/ogg
-./autogen.sh && ./configure --enable-static --disable-shared --disable-dependency-tracking
-make -j
-make install
+{ ./autogen.sh && ./configure --enable-static --disable-shared --disable-dependency-tracking; } | tee -a $LOGS/ogg.configure.log
+{ make -j && make install; } | tee -a $LOGS/ogg.make.log
 
 cd $SRC/flac
-./autogen.sh && ./configure --enable-static --disable-shared --disable-dependency-tracking
-make -j
-make install
+{ ./autogen.sh && ./configure --enable-static --disable-shared --disable-dependency-tracking; } | tee -a $LOGS/flac.configure.log
+{ make -j && make install; } | tee -a $LOGS/flac.make.log
 
 cd $SRC/vorbis
-./autogen.sh && ./configure --enable-static --disable-shared --disable-dependency-tracking
-make -j
-make install
+{ ./autogen.sh && ./configure --enable-static --disable-shared --disable-dependency-tracking; } | tee -a $LOGS/vorbis.configure.log
+{ make -j && make install } | tee -a $LOGS/vorbis.make.log
 
 cd $SRC/minidlna-git
 cp -v $SRC/queue.h /usr/include/sys/queue.h
-autoreconf -i
-./configure --prefix=$OUTPUT --enable-static
-make -j
+{ autoreconf -i && ./configure --prefix=$OUTPUT --enable-static; } | tee -a $LOGS/minidlna.configure.log
 #make dist #How do I generate the changelog that this command requires?
-make install
+{ make -j && make install } | tee -a $LOGS/minidlna.make.log
 
 cd $OUTPUT
 tar -zvcf $OUTPUT/minidlna-static.tar.gz .

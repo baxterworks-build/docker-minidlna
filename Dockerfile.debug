@@ -1,0 +1,5 @@
+FROM alpine:latest
+RUN apk update; apk add bash
+
+COPY build.sh /tmp/
+RUN chmod +x /tmp/build.sh; bash -x /tmp/build.sh

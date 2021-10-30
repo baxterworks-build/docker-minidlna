@@ -2,4 +2,4 @@
 
 FROM alpine:latest
 COPY build.sh /tmp/
-RUN chmod +x /tmp/build.sh; sh /tmp/build.sh
+RUN chmod +x /tmp/build.sh; sh +x /tmp/build.sh
