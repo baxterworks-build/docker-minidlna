@@ -52,4 +52,5 @@ cp -v $SRC/queue.h /usr/include/sys/queue.h
 { make -j && make install; } | tee -a $LOGS/minidlna.make.log
 
 cd $OUTPUT
-tar -zvcf $OUTPUT/minidlna-static.tar.gz .
+tar -zvcf /tmp/minidlna-static.tar.gz .
+mv /tmp/minidlna-static.tar.gz $OUTPUT/
