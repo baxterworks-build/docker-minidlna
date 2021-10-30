@@ -43,7 +43,7 @@ cd $SRC/flac
 
 cd $SRC/vorbis
 { ./autogen.sh && ./configure --enable-static --disable-shared --disable-dependency-tracking; } | tee -a $LOGS/vorbis.configure.log
-{ make -j && make install } | tee -a $LOGS/vorbis.make.log
+{ make -j && make install; } | tee -a $LOGS/vorbis.make.log
 
 cd $SRC/minidlna-git
 cp -v $SRC/queue.h /usr/include/sys/queue.h
